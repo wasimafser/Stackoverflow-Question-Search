@@ -66,7 +66,7 @@ import Alert from "./Alert";
    }
 
    fetchData(){
-     var url = new URL("http://127.0.0.1:8000/search/advanced/");
+     var url = new URL("http://127.0.0.1:8000/app/search/advanced/");
      var params = this.state.query;
      Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
      fetch(url)
