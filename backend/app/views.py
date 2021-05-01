@@ -9,8 +9,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from . import models
+from . import throttles
 
 class AdvancedSearchAPI(APIView):
+    throttle_classes = [throttles.AnonMinThrottle, throttles.AnonDayThrottle]
 
     def get(self, request, format=None):
         """
