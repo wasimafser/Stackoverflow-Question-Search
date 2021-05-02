@@ -156,3 +156,14 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000"
 ]
+
+
+# CELERY
+
+CELERY_BROKER_URL = 'amqp://stack:stackoverflow@rabbitmq:5672/stack_vhost'
+CELERY_RESULT_BACKEND = 'rpc://stack:stackoverflow@rabbitmq:5672/stack_vhost'
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE

@@ -10,6 +10,7 @@ from rest_framework.response import Response
 
 from . import models
 from . import throttles
+from . import tasks
 
 class AdvancedSearchAPI(APIView):
     throttle_classes = [throttles.AnonMinThrottle, throttles.AnonDayThrottle]
@@ -28,31 +29,6 @@ class AdvancedSearchAPI(APIView):
         data['site'] = 'stackoverflow'
         # Transform Dict to query for storage
         query = parse.urlencode(data)
-        # data = {
-        #     'q': '',
-        #     'accepted': '',
-        #     'answers': '',
-        #     'body': '',
-        #     'closed': '',
-        #     'migrated': '',
-        #     'notice': '',
-        #     'nottagged': '',
-        #     'tagged': '',
-        #     'title': '',
-        #     'user': '',
-        #     'url': '',
-        #     'views': '',
-        #     'wiki': '',
-        #     'fromdate': '',
-        #     'todate': '',
-        #     'page': '',
-        #     'pagesize': '',
-        #     'order': '',
-        #     'sort': '',
-        #     'min': '',
-        #     'max': '',
-        #     'site': 'stackoverflow'
-        # }
         try:
             query_response = models.QueryResponse.objects.get(query=query)
             response_json = query_response.response
@@ -62,6 +38,5 @@ class AdvancedSearchAPI(APIView):
                 params=data
             )
             response_json = response.json()
-            models.QueryResponse.objects.create(query=query, response=response_json)
+            tasks.save_queryresponse.delay(query, response_json)
         return Response(response_json, status=status.HTTP_200_OK)
-        # return Response({"TEST": "TEST"}, status=status.HTTP_200_OK)
