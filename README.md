@@ -24,3 +24,14 @@ Now navigate to http://127.0.0.1:8000.
   * Celery ( Task Queue )
   * RabbitMQ ( Celery Message Broker )
   * CORS-Headers ( Fix CORS Related problems )
+* Frontend :
+  * React ( Complied and served with Django )
+  * TailwindCSS ( CSS, via CDN )
+
+#### What can it do ?
+* Search StackOverflow with the [advanced-search](https://api.stackexchange.com/docs/advanced-search) API endpoint.
+* List results with pagination support.
+* Cache results.
+* Throttle requests :
+  * Per Min: **5**
+  * Per Day: **100**
